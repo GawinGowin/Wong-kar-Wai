@@ -1,0 +1,16 @@
+{
+  "tasks": [
+    {
+      "type": "cppbuild",
+      "label": "2048_make",
+      "command": "make",
+      "args": [
+        "debug"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+  ],
+  "version": "2.0.0"
+}

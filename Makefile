@@ -1,6 +1,7 @@
 # Linux ver
 
 NAME = 2048
+DNAME := $(NAME)_debug
 
 LIBFT_DIR = pkg
 LIBFT_A = $(LIBFT_DIR)/libft.a
@@ -13,23 +14,35 @@ SRCS += $(SRC_DIR)/utils.c
 SRCS += $(SRC_DIR)/presentation.c
 SRCS += $(SRC_DIR)/color.c
 
-
 OBJS = $(SRCS:.c=.o)
+DOBJS := $(SRCS:.c=_d.o)
 DEP = $(OBJS:.o=.d)
+DDEP = $(DOBJS:.o=.d)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP -Iinclude -I$(LIBFT_DIR)
-LDFLAGS = -L$(LIBFT_DIR) -lft -lncurses
+LFLAGS = -L$(LIBFT_DIR) -lft -lncurses
+DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 
 .PHONY: all
 all: $(LIBFT_A) $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_A)
-	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) -o $@
+
+.PHONY: debug
+debug: $(LIBFT_A) $(DNAME)
+
+$(DNAME): $(DOBJS) $(LIBFT_A)
+	$(CC) $(CFLAGS) $(DFLAGS) $(DOBJS) $(LFLAGS) -o $@
 
 -include $(DEP)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+-include $(DDEP)
+%_d.o: %.c
+	$(CC) $(CFLAGS) $(DFLAGS) -c $< -o $@
 
 $(LIBFT_A):
 	@make -C $(LIBFT_DIR)
@@ -37,7 +50,7 @@ $(LIBFT_A):
 .PHONY: clean
 clean:
 	@make clean -C $(LIBFT_DIR)
-	rm -f $(OBJS) $(DEP)
+	rm -f $(OBJS) $(DOBJS) $(DEP) $(DDEP) $(DNAME)
 
 .PHONY: fclean
 fclean: clean
@@ -62,12 +75,12 @@ re: fclean all
 
 # CC = cc
 # CFLAGS = -Wall -Wextra -Werror -Iinclude -I$(LIBFT_DIR) -I/opt/homebrew/opt/ncurses/include
-# LDFLAGS = -L$(LIBFT_DIR) -lft -L/opt/homebrew/opt/ncurses/lib -lncurses
+# LFLAGS = -L$(LIBFT_DIR) -lft -L/opt/homebrew/opt/ncurses/lib -lncurses
 
 # all: $(LIBFT_A) $(NAME)
 
 # $(NAME): $(OBJS) $(LIBFT_A)
-# 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
+# 	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
 
 # $(LIBFT_A):
 # 	@make -C $(LIBFT_DIR)

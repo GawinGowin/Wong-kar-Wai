@@ -1,0 +1,22 @@
+{
+    // IntelliSense を使用して利用可能な属性を学べます。
+    // 既存の属性の説明をホバーして表示します。
+    // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+        "name": "2048",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/2048_debug",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": true,
+        "preLaunchTask": "2048_make",
+        "MIMode": "gdb",
+        "miDebuggerPath": "/usr/bin/gdb"
+        }
+    ]
+}

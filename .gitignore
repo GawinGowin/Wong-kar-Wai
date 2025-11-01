@@ -55,4 +55,5 @@ dkms.conf
 *.dwo
 
 2048
+2048_debug
 !/cmd/2048
